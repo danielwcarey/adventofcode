@@ -13,7 +13,7 @@
 //
 async Task Main() {
 	// sample data
-	var data = await Data.ParseAsync(new StringReader(sample));// sample.Split("\n").Select(str => int.Parse(str)).ToArray();
+	var data = await Data.ParseAsync(new StringReader(sample));
 
 	// data
 	//string path = Path.Combine(Path.GetDirectoryName(Util.CurrentQueryPath ?? "") ?? "", "Day0X-input.txt");

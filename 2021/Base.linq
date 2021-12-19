@@ -54,25 +54,40 @@ partial class Grid<TCell> {
 		get => Map[y, x];
 		set => Map[y, x] = value;
 	}
+
+    public void DumpGrid(Func<TCell, string>? displayText = null) {
+        for (var y = 0; y < Height; y++) {
+            List<string> cells = new();
+            for (var x = 0; x < Width; x++) {
+                if (displayText == null) {
+                    if(this[x,y] != null)
+                        cells.Add(this[x, y].ToString());
+                    else
+                        cells.Add(" ");
+                } else {
+                    cells.Add(displayText(this[x, y]));
+                }
+            }
+            string.Join(" ", cells).Dump();
+        }
+    }
 }
 
 partial class Grid<TCell> {
-	// x, y, value
-	public void ForEach(Action<int, int, TCell> action) {
-		for (var x = 0; x < Width; x++) {
-			for (var y = 0; y < Height; y++) {
-				var value = this[x, y];
-				action(x, y, value);
-			}
-		}
-	}
+    public void ForEach(Action<TCell> action) {
+        for (var x = 0; x < Width; x++) {
+            for (var y = 0; y < Height; y++) {
+                action(this[x, y]);
+            }
+        }
+    }
 
-	public List<(int X, int Y, TCell Value)> GetValues() {
-		var result = new List<(int X, int Y, TCell Value)>();
-		for (var x = 0; x < this.Width; x++) {
-			for (var y = 0; y < this.Height; y++) {
-				result.Add((x, y, this[x, y]));
-			}
+    public List<(int X, int Y, TCell Value)> GetValues() {
+        var result = new List<(int X, int Y, TCell Value)>();
+        for (var x = 0; x < this.Width; x++) {
+            for (var y = 0; y < this.Height; y++) {
+                result.Add((x, y, this[x, y]));
+            }
 		}
 		return result;
 	}
